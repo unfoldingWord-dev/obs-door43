@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ HEADING }}</title>
+    <meta name="description" content="unrestricted biblical content in every language">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="https://live.door43.org/templates/obs.html">
+</head>
+<body>
+<header class="site-header" role="banner">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://127.0.0.1:4000/">
+                    Door43
+                </a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="fa fa-align-justify"></span>
+                </button>
+            </div>
+            <div id="main-navbar" class="navbar-nav navbar-right collapse navbar-collapse">
+                <ul id="menu-main-menu" class="nav navbar-nav">
+                    <li class="dropdown"><a href="http://127.0.0.1:4000/en/about/" aria-haspopup="true"
+                                            aria-expanded="false">About</a>
+                        <button type="button" class="btn btn-nav-dark dropdown-toggle" data-toggle="dropdown"><span
+                                class="fa fa-caret-down"></span><span class="fa fa-caret-up"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                            <li class=""><a href="http://127.0.0.1:4000/en/statement-of-faith/">Statement of Faith</a>
+                            </li>
+                            <li class=""><a href="http://127.0.0.1:4000/en/translation-guidelines/">Translation
+                                Guidelines</a></li>
+                            <li class=""><a href="http://127.0.0.1:4000/en/legal/">Legal Information</a></li>
+                        </ul>
+                    </li>
+                    <li class=""><a href="http://127.0.0.1:4000/en/contact/">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="print-header" style="display: none;">
+    <h2 class="site-description">open-licensed biblical content</h2>
+</div>
+<div class="content-container container">
+    <main class="content" role="main">
+        <article>
+            <header>
+                <div class="obs-header-title">
+                    <h1>
+                        <span class="fa fa-star obs-checking-level-icon"></span>
+                        <span id="obs-h1">Header</span>
+                        <span class="fa fa-check-circle-o obs-build-status-icon"></span>
+                    </h1>
+                </div>
+                <div class="obs-last-updated">
+                    <span id="last-updated">Updated 1 hour ago</span>
+                    <span class="fa fa-eye"></span>
+                    <span id="obs-checking-level">2</span>
+                </div>
+            </header>
+            <div class="page-content row">
+                <div class="col-md-3 sidebar" role="complementary">
+                    <div id="obs-sidebar">
+                        { sidebar }
+                    </div>
+                </div>
+                <div class="col-md-9" role="main" id="wrong-id">
+                    { content }
+                </div>
+            </div>
+        </article>
+    </main>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="container">
+        <p style="margin-top:18px">
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"></a>
+            <br>
+            <span property="dct:title">The content of this page ("<a
+                    href="https://live.door43.org/templates/obs.html" rel="dct:source">{{ HEADING }}</a>") from </span>
+            <span property="cc:attributionName">Door43</span> is licensed
+            under a
+            <br><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+            Attribution-ShareAlike 4.0 International License</a>.
+        </p>
+    </div>
+</footer>
+<footer class="print-footer" style="display: none;">
+    <div class="row">
+        <div class="one-half first"></div>
+        <div class="one-half last">
+            <p>Source: https://live.door43.org/templates/obs.html</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</footer>
+</body>
+</html>
