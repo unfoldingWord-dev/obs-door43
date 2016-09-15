@@ -3,6 +3,7 @@ import codecs
 import os
 from unittest import TestCase
 from obs_door43.obs_door43 import OBSDoor43
+from general_tools.file_utils import load_json_object
 
 
 class TestOBSDoor43(TestCase):
@@ -42,11 +43,12 @@ class TestOBSDoor43(TestCase):
     def test_run(self):
 
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        test_source_location = 'file://' + os.path.join(this_dir, 'source')
+        test_source_dir = os.path.join(this_dir, 'source')
+        test_source_location = 'file://' + test_source_dir
         test_output_location = os.path.join(this_dir, 'target')
-        test_template = 'file://' + os.path.join(this_dir, 'source', 'obs_template.html')
+        test_template = 'file://' + os.path.join(test_source_dir, 'obs_template.html')
 
-        with OBSDoor43(test_source_location, test_output_location, test_template, True) as obs:
+        with OBSDoor43(test_source_location, test_output_location, test_template, False) as obs:
             obs.run()
 
         # should be 50 html files in test_output_location
@@ -68,3 +70,34 @@ class TestOBSDoor43(TestCase):
 
         # check the title
         self.assertGreater(html.find('<title>Open Bible Stories</title>'), -1)
+
+        # check the heading
+        build_log = load_json_object(os.path.join(test_source_dir, 'build_log.json'))
+        header = build_log['repo_name'].replace('-', ' ')
+        self.assertGreater(html.find('<span id="obs-h1">{0}</span>'.format(header)), -1)
+
+    def test_template_exception_raised(self):
+
+        this_dir = os.path.dirname(os.path.realpath(__file__))
+        test_source_dir = os.path.join(this_dir, 'source')
+        test_source_location = 'file://' + test_source_dir
+        test_output_location = os.path.join(this_dir, 'target')
+        test_template = 'file://' + os.path.join(test_source_dir, 'obs_template_broken.html')
+
+        with self.assertRaises(Exception) as context:
+            with OBSDoor43(test_source_location, test_output_location, test_template, False) as obs:
+                obs.run()
+        self.assertEqual('No div tag with id "obs-content" was found in the template', context.exception.message)
+
+    def test_source_exception_raised(self):
+
+        this_dir = os.path.dirname(os.path.realpath(__file__))
+        test_source_dir = os.path.join(this_dir, 'exception_source')
+        test_source_location = 'file://' + test_source_dir
+        test_output_location = os.path.join(this_dir, 'target')
+        test_template = 'file://' + os.path.join(test_source_dir, 'obs_template.html')
+
+        with self.assertRaises(Exception) as context:
+            with OBSDoor43(test_source_location, test_output_location, test_template, False) as obs:
+                obs.run()
+        self.assertEqual('No div tag with class "obs-content" was found in', context.exception.message[0:48])

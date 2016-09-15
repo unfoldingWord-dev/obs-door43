@@ -1,3 +1,6 @@
 [run]
 source =
     obs_door43
+
+omit =
+    cli.py

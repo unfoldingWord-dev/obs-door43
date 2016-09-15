@@ -1,8 +1,6 @@
 from __future__ import unicode_literals, print_function
-import argparse
 import codecs
 import os
-import sys
 import shutil
 import tempfile
 from bs4 import BeautifulSoup
@@ -49,13 +47,14 @@ class OBSDoor43(object):
         for i in range(1, 51):
             obs_files.append(self.download_obs_file(self.source_location, str(i).zfill(2) + '.html'))
 
-        self.apply_the_template(template_html, obs_files)
+        self.apply_the_template(template_html, obs_files, build_log)
 
-    def apply_the_template(self, template_html, obs_files):
+    def apply_the_template(self, template_html, obs_files, build_log):
 
         language_code = ''
         title = ''
         canonical = ''
+        heading = build_log['repo_name'].replace('-', ' ')
 
         # apply the template
         template = BeautifulSoup(template_html, 'html.parser')
@@ -104,6 +103,11 @@ class OBSDoor43(object):
                 a_tag.clear()
                 a_tag.append(title)
 
+            # set the page heading
+            heading_span = template.body.find('span', {'id': 'obs-h1'})
+            heading_span.clear()
+            heading_span.append(heading)
+
             # get the html
             html = unicode(template)
 
@@ -149,23 +153,3 @@ class OBSDoor43(object):
 
         self.download_obs_file(base_url, file_name)
         return load_json_object(os.path.join(self.temp_dir, file_name))
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-s', '--source', dest='source_location', default=False, required=True,
-                        help='The URL of the directory containing the OBS 01.html - 50.html source files.')
-
-    parser.add_argument('-o', '--output', dest='output_location', default=False, required=True,
-                        help='The directory for the generated HTML files.')
-
-    parser.add_argument('-t', '--template', dest='template', default=False, required=True,
-                        help='The URL of the HTML template.')
-
-    parser.add_argument('-q', '--quiet', dest='quiet', action='store_true', help='Do not write to console.')
-
-    args = parser.parse_args(sys.argv[1:])
-
-    with OBSDoor43(args.source_location, args.output_location, args.template, args.quiet) as obs:
-        obs.run()
